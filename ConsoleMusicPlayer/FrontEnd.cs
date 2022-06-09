@@ -5,12 +5,11 @@
         public void PrintTitle()
         {
             Console.WriteLine("MEDIAPLAYER");
-            Console.WriteLine("Enter the object path to a song.");
+            Console.WriteLine("Enter the path to a song.");
         }
         public void PrintMenu()
         {
-            Console.WriteLine("Press p to pause/play, press s to stop the current song.");
-            Console.WriteLine("8 raises the volume, 2 lowers the volume, 5 mutes/unmutes.");
+            Console.WriteLine("1 to pause or play \\ 2 to stop \\ 3 to change volume \\ 4 to mute/unmute \\ 5 to put on a new song \\ 0 to quit");
         }
     }
 }

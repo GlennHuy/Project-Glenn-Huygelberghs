@@ -4,9 +4,9 @@ namespace ConsoleMusicPlayer
 {
     public class BackEnd
     {
+        WindowsMediaPlayer player = new WindowsMediaPlayer();
         public string GetUserChoice()
         {
-            Console.WriteLine("Enter path to song file.");
             string input = TrimInput(Console.ReadLine());
             return input;
         }
@@ -15,36 +15,41 @@ namespace ConsoleMusicPlayer
             string trimmedChoice = input.Trim('"');
             return trimmedChoice;
         }
-        public void PausePlay(string input)
+        public void Initialize(string input)
         {
-            WindowsMediaPlayer player = new WindowsMediaPlayer();
-            bool songPlaying = true;
-            string control = input;
-            while (control == "s" || control == "p") ;
+            string musicFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
+            player.URL = Path.Combine(musicFolder, input);
+            player.controls.play();
+        }
+        public bool PausePlay(bool input)
+        {
+            bool songPlaying = input;
+            switch (songPlaying)
             {
-                switch (control)
-                {
-                    case "s":
-                        player.controls.stop();
-                        break;
-                    case "p":
-                        if (songPlaying == true)
-                        {
-                            songPlaying = false;
-                            player.controls.pause();
-                        }
-                        else if (songPlaying == false)
-                        {
-                            songPlaying = true;
-                            player.controls.play();
-                        }
-                        break;
-                    default:
-                        Console.WriteLine($"Enter a valid command. s to stop p to pause and play.");
-                        break;
-                }
-                control = Console.ReadLine();
-            } 
+                case true:
+                    songPlaying = false;
+                    player.controls.pause();
+                    break;
+                case false:
+                    songPlaying = true;
+                    player.controls.play();
+                    break;
+                default:
+                    break;
+            }
+            return songPlaying;
+        }
+        public void MuteUnmute(bool songStatus)
+        {
+            bool songPlaying = songStatus;
+            if (songPlaying == true && player.settings.mute != true)
+            {
+                player.settings.mute = true;
+            }
+            else if (songPlaying == true && player.settings.mute == true)
+            {
+                player.settings.mute = false;
+            }
         }
     }
 }
