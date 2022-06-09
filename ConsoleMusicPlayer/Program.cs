@@ -6,35 +6,43 @@ BackEnd backEnd = new BackEnd();
 
 frontEnd.PrintTitle();
 string song = backEnd.GetUserChoice();
-frontEnd.PrintMenu();
+
 
 WindowsMediaPlayer player = new WindowsMediaPlayer();
 string musicFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
 player.URL = Path.Combine(musicFolder, song);
 player.controls.play();
-bool songStatus = true;
+
+frontEnd.PrintMenu();
+bool songPlaying = true;
 string control = Console.ReadLine();
-do
+while (control == "s" || control == "p")
 {
-    switch (control = Console.ReadLine())
+    
+    switch (control)
     {
         case "s":
             player.controls.stop();
+            songPlaying = false;
             break;
         case "p":
-            if (songStatus == true)
+            if (songPlaying == true)
             {
-                songStatus = false;
+                songPlaying = false;
                 player.controls.pause();
             }
-            else if (songStatus == false)
+            else if (songPlaying == false)
             {
-                songStatus = true;
+                songPlaying = true;
                 player.controls.play();
             }
             break;
         default:
-            Console.WriteLine($"Enter a valid command. s to stop p to pause and play.");
+            Console.WriteLine("Incorrect input.");
+            Console.Clear();
+            frontEnd.PrintMenu();
             break;
     }
-} while (control == "s" || control == "p");
+    control = Console.ReadLine();
+}
+

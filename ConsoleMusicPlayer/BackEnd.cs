@@ -18,9 +18,9 @@ namespace ConsoleMusicPlayer
         public void PausePlay(string input)
         {
             WindowsMediaPlayer player = new WindowsMediaPlayer();
-            bool songStatus = true;
+            bool songPlaying = true;
             string control = input;
-            do
+            while (control == "s" || control == "p") ;
             {
                 switch (control)
                 {
@@ -28,14 +28,14 @@ namespace ConsoleMusicPlayer
                         player.controls.stop();
                         break;
                     case "p":
-                        if (songStatus == true)
+                        if (songPlaying == true)
                         {
-                            songStatus = false;
+                            songPlaying = false;
                             player.controls.pause();
                         }
-                        else if (songStatus == false)
+                        else if (songPlaying == false)
                         {
-                            songStatus = true;
+                            songPlaying = true;
                             player.controls.play();
                         }
                         break;
@@ -43,7 +43,8 @@ namespace ConsoleMusicPlayer
                         Console.WriteLine($"Enter a valid command. s to stop p to pause and play.");
                         break;
                 }
-            } while (control == "s" || control == "p");
+                control = Console.ReadLine();
+            } 
         }
     }
 }
