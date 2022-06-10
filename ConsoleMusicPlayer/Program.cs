@@ -9,6 +9,7 @@ frontEnd.PrintTitle();
 string song = frontEnd.GetUserChoice();
 
 backEnd.Initialize(song);
-player.settings.volume = 0; // ToDo : delete this
+player.settings.volume = 25; // ToDo : delete this
 
-backEnd.Something();
+backEnd.Execute();
+

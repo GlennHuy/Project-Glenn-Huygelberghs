@@ -1,4 +1,5 @@
-﻿using WMPLib;
+﻿using ConsoleMusicPlayer.Enums;
+using WMPLib;
 
 namespace ConsoleMusicPlayer
 {
@@ -52,21 +53,33 @@ namespace ConsoleMusicPlayer
             }
         }
 
-        public int GetVolume()
+        public void Volume(int volume)
         {
-            int volume = Convert.ToInt32(Console.ReadLine());
-            return volume;
-        }
-
-        public void Volume(bool songStatus, int volume)
-        {
-            if (songStatus == true)
+            if (volume >=0 && volume <= 100)
             {
-                _player.settings.volume = volume;
+                if (volume == 0)
+                {
+                    Console.WriteLine("You ARE aware the mute function exists, yes?");
+                    _player.settings.volume = volume;
+                }
+                else
+                {
+                    _player.settings.volume = volume;
+                }
             }
-            if (songStatus != true)
-            {
-                Console.WriteLine("");
+            else
+            {  //ToDo: finish
+                Console.WriteLine("How did you mess that up?");
+                _frontEnd.ShowVolumeRange();
+                Volume(_frontEnd.GetVolume());
+               // try
+               // {
+                    // _player.settings.volume = volume
+               // }
+               //  catch (FormatException)
+               // {
+                    // Console.WriteLine($"The volume entered is not valid");
+               // }
             }
         }
 
@@ -75,48 +88,52 @@ namespace ConsoleMusicPlayer
             _player.controls.stop();
         }
 
-        public void HandleUserInput(int control)
+        public void HandleUserInput(UserChoice control)
         {
             bool songPlaying = true;
 
             switch (control)
             {
-                case 0:
+                case UserChoice.Exit:
                     Environment.Exit(0);
                     break;
 
-                case 1:
+                case UserChoice.PausePlay:
                     songPlaying = PausePlay(songPlaying);
                     break;
 
-                case 2:
+                case UserChoice.StopPlaying:
                     StopPlaying();
                     break;
 
-                case 3:
-                    GetVolume();
-                    Volume(songPlaying, GetVolume());
+                case UserChoice.Volume:
+                    _frontEnd.ShowVolumeRange();
+                    Volume(_frontEnd.GetVolume());
                     break;
 
-                case 4:
+                case UserChoice.MuteUnmute:
                     MuteUnmute(songPlaying);
                     break;
 
+                case UserChoice.NewSong:
+                    //ToDo: Make it possible to choose a new song
+                    break;
+
                 default:
-                    Console.WriteLine("Incorrect input.");
+                    Console.WriteLine("I'm sorry, was choosing one of 6 options too hard? Try again.");
                     Console.Clear();
                     _frontEnd.PrintMenu();
                     break;
             }
             Console.Clear();
-            Something();
+            Execute();
         }
 
-        public void Something() //ToDo: verander naam
+        public void Execute() //ToDo: verander naam
         {
             _frontEnd.PrintMenu();
             int control = _frontEnd.GetUserInput();
-            HandleUserInput(control);
+            HandleUserInput((UserChoice)control);
         }
     }
 }
