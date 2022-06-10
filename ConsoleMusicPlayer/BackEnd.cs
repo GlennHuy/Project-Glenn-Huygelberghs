@@ -4,7 +4,11 @@ namespace ConsoleMusicPlayer
 {
     public class BackEnd
     {
-        WindowsMediaPlayer player = new WindowsMediaPlayer();
+        WindowsMediaPlayer player;
+        public BackEnd()
+        {
+            player = new WindowsMediaPlayer();
+        }
         public string GetUserChoice()
         {
             string input = TrimInput(Console.ReadLine());
@@ -29,15 +33,15 @@ namespace ConsoleMusicPlayer
                 case true:
                     songPlaying = false;
                     player.controls.pause();
-                    break;
+                    return songPlaying;
                 case false:
                     songPlaying = true;
                     player.controls.play();
-                    break;
+                    return songPlaying;
                 default:
-                    break;
+
             }
-            return songPlaying;
+
         }
         public void MuteUnmute(bool songStatus)
         {
@@ -51,5 +55,27 @@ namespace ConsoleMusicPlayer
                 player.settings.mute = false;
             }
         }
+        public int GetVolume()
+        {
+            int volume = Convert.ToInt32(Console.ReadLine());
+            return volume;
+        }
+
+        public void Volume(bool songStatus, int volume)
+        {
+            if (songStatus == true)
+            {
+                player.settings.volume = volume;
+            }
+            if (songStatus != true)
+            {
+                Console.WriteLine("");
+            }
+        }
+        public void StopPlaying()
+        {
+            player.controls.stop();
+        }
+
     }
 }

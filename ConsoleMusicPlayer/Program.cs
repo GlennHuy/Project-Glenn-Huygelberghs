@@ -7,7 +7,6 @@ BackEnd backEnd = new BackEnd();
 frontEnd.PrintTitle();
 string song = backEnd.GetUserChoice();
 
-WindowsMediaPlayer player = new WindowsMediaPlayer();
 backEnd.Initialize(song);
 
 int control;
@@ -19,7 +18,7 @@ do
     switch (control)
     {
         case 2:
-            player.controls.stop();
+            backEnd.StopPlaying();
             break;
         case 1:
             backEnd.PausePlay(songPlaying);
@@ -30,7 +29,10 @@ do
         case 0:
             Environment.Exit(0);
             break;
-
+        case 3:
+            backEnd.GetVolume();
+            backEnd.Volume(songPlaying, backEnd.GetVolume());
+            break;
         default:
             Console.WriteLine("Incorrect input.");
             Console.Clear();
