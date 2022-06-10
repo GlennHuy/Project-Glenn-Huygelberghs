@@ -5,11 +5,10 @@
         public void PrintTitle() //ToDo: Make Fancy
         {
             Console.WriteLine("MEDIAPLAYER");
-            Console.WriteLine("Enter the path to a song. Or don't, I don't care.");
+            Console.WriteLine("Enter the path to a song.");
         }
         public void PrintMenu() // ToDo: Make Fancy
         {
-            Console.WriteLine("Pick one.");
             Console.WriteLine("1 to pause or play \\ 2 to stop \\ 3 to change volume \\ 4 to mute/unmute \\ 5 to put on a new song \\ 0 to quit");
         }
         public int GetUserInput()
@@ -29,12 +28,16 @@
         }
         public void ShowVolumeRange()
         {
-            Console.WriteLine("Pick volume percentage. Hint: Anywhere from 0 to 100.");
+            Console.WriteLine("Pick volume percentage.");
         }
         public int GetVolume()
         {
             int volume = Convert.ToInt32(Console.ReadLine());
             return volume;
+        }
+        public void NewSongChoice()
+        {
+            Console.WriteLine("Enter the path of the new song you want to play.");
         }
     }
 }

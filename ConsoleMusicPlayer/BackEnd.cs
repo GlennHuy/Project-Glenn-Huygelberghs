@@ -55,43 +55,35 @@ namespace ConsoleMusicPlayer
 
         public void Volume(int volume)
         {
-            if (volume >=0 && volume <= 100)
+            if (volume >= 0 && volume <= 100)
             {
-                if (volume == 0)
-                {
-                    Console.WriteLine("You ARE aware the mute function exists, yes?");
-                    _player.settings.volume = volume;
-                }
-                else
-                {
-                    _player.settings.volume = volume;
-                }
+                _player.settings.volume = volume;
             }
             else
             {  //ToDo: finish
-                Console.WriteLine("How did you mess that up?");
+                Console.WriteLine("Volume has to be a value between 0 and 100.");
                 _frontEnd.ShowVolumeRange();
                 Volume(_frontEnd.GetVolume());
-               // try
-               // {
-                    // _player.settings.volume = volume
-               // }
-               //  catch (FormatException)
-               // {
-                    // Console.WriteLine($"The volume entered is not valid");
-               // }
+                // try
+                // {
+                // _player.settings.volume = volume
+                // }
+                //  catch (FormatException)
+                // {
+                // Console.WriteLine($"The volume entered is not valid");
+                // }
             }
-        }
+        } //ToDo: finish this
 
-        public void StopPlaying()
+        public bool StopPlaying()
         {
             _player.controls.stop();
+            bool songPlaying = false;
+            return songPlaying;
         }
 
-        public void HandleUserInput(UserChoice control)
+        public void HandleUserInput(UserChoice control, bool songPlaying)
         {
-            bool songPlaying = true;
-
             switch (control)
             {
                 case UserChoice.Exit:
@@ -103,12 +95,13 @@ namespace ConsoleMusicPlayer
                     break;
 
                 case UserChoice.StopPlaying:
-                    StopPlaying();
+                    songPlaying = StopPlaying();
                     break;
 
                 case UserChoice.Volume:
                     _frontEnd.ShowVolumeRange();
                     Volume(_frontEnd.GetVolume());
+                    Console.Clear();
                     break;
 
                 case UserChoice.MuteUnmute:
@@ -116,24 +109,25 @@ namespace ConsoleMusicPlayer
                     break;
 
                 case UserChoice.NewSong:
-                    //ToDo: Make it possible to choose a new song
+                    _frontEnd.NewSongChoice();
+                    string song = _frontEnd.GetUserChoice();
+                    Initialize(song);
                     break;
 
                 default:
-                    Console.WriteLine("I'm sorry, was choosing one of 6 options too hard? Try again.");
                     Console.Clear();
+                    Console.WriteLine("Choose one of the available options.");
                     _frontEnd.PrintMenu();
                     break;
             }
-            Console.Clear();
-            Execute();
+            ExecutePlayer(songPlaying);
         }
 
-        public void Execute() //ToDo: verander naam
+        public void ExecutePlayer(bool songPlaying)
         {
             _frontEnd.PrintMenu();
             int control = _frontEnd.GetUserInput();
-            HandleUserInput((UserChoice)control);
+            HandleUserInput((UserChoice)control, songPlaying);
         }
     }
 }

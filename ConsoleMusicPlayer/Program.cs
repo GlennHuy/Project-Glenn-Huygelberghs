@@ -7,9 +7,10 @@ BackEnd backEnd = new BackEnd(player, frontEnd);
 
 frontEnd.PrintTitle();
 string song = frontEnd.GetUserChoice();
+bool songPlaying = true;
 
 backEnd.Initialize(song);
-player.settings.volume = 25; // ToDo : delete this
+player.settings.volume = 0; // ToDo : delete this
 
-backEnd.Execute();
+backEnd.ExecutePlayer(songPlaying);
 
