@@ -3,43 +3,12 @@ using WMPLib;
 
 FrontEnd frontEnd = new FrontEnd();
 WindowsMediaPlayer player = new WindowsMediaPlayer();
-BackEnd backEnd = new BackEnd(player);
+BackEnd backEnd = new BackEnd(player, frontEnd);
 
 frontEnd.PrintTitle();
-string song = backEnd.GetUserChoice();
+string song = frontEnd.GetUserChoice();
 
 backEnd.Initialize(song);
+player.settings.volume = 0; // ToDo : delete this
 
-int control;
-bool songPlaying = true;
-do
-{
-    frontEnd.PrintMenu();
-    control = Convert.ToInt32(Console.ReadLine());
-    switch (control)
-    {
-        case 2:
-            backEnd.StopPlaying();
-            break;
-        case 1:
-            songPlaying = backEnd.PausePlay(songPlaying);
-            break;
-        case 4:
-            backEnd.MuteUnmute(songPlaying);
-            break;
-        case 0:
-            Environment.Exit(0);
-            break;
-        case 3:
-            backEnd.GetVolume();
-            backEnd.Volume(songPlaying, backEnd.GetVolume());
-            break;
-        default:
-            Console.WriteLine("Incorrect input.");
-            Console.Clear();
-            frontEnd.PrintMenu();
-            break;
-    }
-    Console.Clear();
-} while (control == 1 || control == 2 || control == 3 || control == 4 || control == 5 || control == 0);
-
+backEnd.Something();
