@@ -4,10 +4,10 @@ namespace ConsoleMusicPlayer
 {
     public class BackEnd
     {
-        WindowsMediaPlayer player;
-        public BackEnd()
+        WindowsMediaPlayer _player;
+        public BackEnd(WindowsMediaPlayer player)
         {
-            player = new WindowsMediaPlayer();
+           _player = player;
         }
         public string GetUserChoice()
         {
@@ -22,8 +22,8 @@ namespace ConsoleMusicPlayer
         public void Initialize(string input)
         {
             string musicFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-            player.URL = Path.Combine(musicFolder, input);
-            player.controls.play();
+            _player.URL = Path.Combine(musicFolder, input);
+            _player.controls.play();
         }
         public bool PausePlay(bool input)
         {
@@ -32,27 +32,26 @@ namespace ConsoleMusicPlayer
             {
                 case true:
                     songPlaying = false;
-                    player.controls.pause();
+                    _player.controls.pause();
                     return songPlaying;
                 case false:
                     songPlaying = true;
-                    player.controls.play();
+                    _player.controls.play();
                     return songPlaying;
                 default:
 
             }
-
         }
         public void MuteUnmute(bool songStatus)
         {
             bool songPlaying = songStatus;
-            if (songPlaying == true && player.settings.mute != true)
+            if (songPlaying == true && _player.settings.mute != true)
             {
-                player.settings.mute = true;
+                _player.settings.mute = true;
             }
-            else if (songPlaying == true && player.settings.mute == true)
+            else if (songPlaying == true && _player.settings.mute == true)
             {
-                player.settings.mute = false;
+                _player.settings.mute = false;
             }
         }
         public int GetVolume()
@@ -65,7 +64,7 @@ namespace ConsoleMusicPlayer
         {
             if (songStatus == true)
             {
-                player.settings.volume = volume;
+                _player.settings.volume = volume;
             }
             if (songStatus != true)
             {
@@ -74,8 +73,11 @@ namespace ConsoleMusicPlayer
         }
         public void StopPlaying()
         {
-            player.controls.stop();
+            _player.controls.stop();
         }
+        public void HandleUserInput(int userChoice)
+        {
 
+        }
     }
 }

@@ -2,7 +2,8 @@
 using WMPLib;
 
 FrontEnd frontEnd = new FrontEnd();
-BackEnd backEnd = new BackEnd();
+WindowsMediaPlayer player = new WindowsMediaPlayer();
+BackEnd backEnd = new BackEnd(player);
 
 frontEnd.PrintTitle();
 string song = backEnd.GetUserChoice();
@@ -21,7 +22,7 @@ do
             backEnd.StopPlaying();
             break;
         case 1:
-            backEnd.PausePlay(songPlaying);
+            songPlaying = backEnd.PausePlay(songPlaying);
             break;
         case 4:
             backEnd.MuteUnmute(songPlaying);
