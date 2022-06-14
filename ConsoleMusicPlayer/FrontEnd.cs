@@ -30,32 +30,13 @@ ___  ___ ___________ _____  ___  ______ _       _____   _____________
             Console.ResetColor();
         }
 
-        public int GetMenuInput()
+        public string GetMenuInput()
         {
-            int control;
             string userInput = Console.ReadLine();
-            if (string.IsNullOrEmpty(userInput))
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Choose one of the available options.");
-                Console.ResetColor();
-                return GetMenuInput();
-            }
-            else if (!int.TryParse(userInput, out control))
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Choose one of the available options designated by their numbers.");
-                Console.ResetColor();
-                return GetMenuInput();
-            }
-            else
-            {
-                control = Convert.ToInt32(userInput);
-                return control;
-            }
+            return userInput;
         }
 
-        public string GetUserChoice()
+        public string GetSongChoice()
         {
             string input = TrimInput(Console.ReadLine());
             return input;
@@ -89,6 +70,30 @@ ___  ___ ___________ _____  ___  ______ _       _____   _____________
         public void NewSongChoice()
         {
             Console.WriteLine("Enter the path of the new song you want to play.");
+        }
+        public void ErrorMenuType()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Error: Program only responds to the numbers displayed.");
+            Console.ResetColor();
+        }
+        public void ErrorVolumeNumber()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Error: Volume has to be a number.");
+            Console.ResetColor();
+        }
+        public void ErrorVolumeRange()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Error :Volume has to be a value between 0 and 100.");
+            Console.ResetColor();
+        }
+        public void ErrorDefault()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Choose one of the available options.");
+            Console.ResetColor();
         }
     }
 }

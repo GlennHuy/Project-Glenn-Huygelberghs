@@ -66,9 +66,7 @@ namespace ConsoleMusicPlayer
                 else
                 {
                     Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Volume has to be a value between 0 and 100.");
-                    Console.ResetColor();
+                    _frontEnd.ErrorVolumeRange();
                     _frontEnd.ShowVolumeRange();
                     Volume(_frontEnd.GetVolume());
                 }
@@ -76,9 +74,7 @@ namespace ConsoleMusicPlayer
             else
             {
                 Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Volume has to be a number.");
-                Console.ResetColor();
+                _frontEnd.ErrorVolumeNumber();
                 _frontEnd.ShowVolumeRange();
                 Volume(_frontEnd.GetVolume());
             }
@@ -123,34 +119,43 @@ namespace ConsoleMusicPlayer
 
                 case UserChoice.NewSong:
                     _frontEnd.NewSongChoice();
-                    string song = _frontEnd.GetUserChoice();
+                    string song = _frontEnd.GetSongChoice();
                     Initialize(song);
                     Console.Clear();
                     break;
 
                 default:
                     Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Choose one of the available options.");
-                    Console.ResetColor();
+                    _frontEnd.ErrorDefault();
                     break;
             }
             _frontEnd.IsMuted(_player.settings.mute);
             ExecutePlayer(songPlaying);
         }
 
-        public int CheckValidInput(string userInput)
-        {
-            int control;
-            int.TryParse(userInput, out control);
-            return control;
-        }
-
         public void ExecutePlayer(bool songPlaying)
         {
             _frontEnd.PrintMenu();
-            int control = _frontEnd.GetMenuInput();
+            int control = CheckMenuInput(_frontEnd.GetMenuInput());
             HandleUserInput((UserChoice)control, songPlaying);
+        }
+
+        public int CheckMenuInput(string userInput)
+        {
+            int control;
+            if (!int.TryParse(userInput, out control))
+            {
+                Console.Clear();
+                _frontEnd.ErrorMenuType();
+                _frontEnd.ErrorDefault();
+                _frontEnd.PrintMenu();
+                return CheckMenuInput(_frontEnd.GetMenuInput());
+            }
+            else
+            {
+                control = Convert.ToInt32(userInput);
+                return control;
+            }
         }
     }
 }
