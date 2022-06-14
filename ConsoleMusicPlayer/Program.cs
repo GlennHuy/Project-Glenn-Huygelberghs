@@ -10,7 +10,7 @@ string song = frontEnd.GetUserChoice();
 bool songPlaying = true;
 
 backEnd.Initialize(song);
-player.settings.volume = 0; // ToDo : delete this
+player.settings.volume = 69; // ToDo : delete this
 
 backEnd.ExecutePlayer(songPlaying);
 

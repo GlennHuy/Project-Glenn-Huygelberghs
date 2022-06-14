@@ -18,22 +18,45 @@ ___  ___ ___________ _____  ___  ______ _       _____   _____________
             Console.ResetColor();
         }
 
-        public void PrintMenu() // ToDo: Make Fancy
+        public void PrintMenu()
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("|\t 1 \t|\t 2 \t |\t 3 \t|\t 4 \t|\t 5 \t|\t 0 \t|");
-            Console.WriteLine("| Pause/Play | Stop | Volume | Mute/Unmute | New Song | Quit |");
+            Console.WriteLine("|1 : Pause/Play\t|");
+            Console.WriteLine("|2 : Stop\t|");
+            Console.WriteLine("|3 : Volume\t|");
+            Console.WriteLine("|4 : Mute/Unmute|");
+            Console.WriteLine("|5 : New Song\t|");
+            Console.WriteLine("|0 : Quit\t|");
             Console.ResetColor();
         }
 
-        public int GetUserInput()
+        public int GetMenuInput()
         {
-            int control = Convert.ToInt32(Console.ReadLine());
-            return control;
+            int control;
+            string input = Console.ReadLine();
+            if (!int.TryParse(input, out control))
+            {
+                Console.WriteLine("{0} is not an integer", input);
+                GetMenuInput(); 
+            }
+            else if (int.TryParse(input, out control))
+            {
+                if (control < 0 && control >5)
+                {
+                    Console.WriteLine("Choose one of the available options.");
+                    GetMenuInput();
+                }
+                else if (control >= 0 && control <= 5)
+                {
+                    return control;
+                }
+            }return control;
+            
         }
 
         public string GetUserChoice()
         {
+            
             string input = TrimInput(Console.ReadLine());
             return input;
         }
@@ -49,10 +72,18 @@ ___  ___ ___________ _____  ___  ______ _       _____   _____________
             Console.WriteLine("Pick volume percentage.");
         }
 
-        public int GetVolume()
+        public string GetVolume()
         {
-            int volume = Convert.ToInt32(Console.ReadLine());
+            string volume =Console.ReadLine();
             return volume;
+        }
+        public void IsMuted(bool muteStatus)
+        {
+            if (muteStatus == true)
+            {
+                Console.WriteLine("Song is currently muted.");
+            }
+
         }
 
         public void NewSongChoice()

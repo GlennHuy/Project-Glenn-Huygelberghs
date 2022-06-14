@@ -27,12 +27,12 @@ namespace ConsoleMusicPlayer
             switch (songPlaying)
             {
                 case true:
-                    songPlaying = false;
+                    songPlaying = true;
                     _player.controls.pause();
                     return songPlaying;
 
                 case false:
-                    songPlaying = true;
+                    songPlaying = false;
                     _player.controls.play();
                     return songPlaying;
 
@@ -53,29 +53,34 @@ namespace ConsoleMusicPlayer
             }
         }
 
-        public void Volume(int volume)
+        public void Volume(string volume)
         {
-            if (volume >= 0 && volume <= 100)
+            int volValue;
+            bool isNumber = int.TryParse(volume, out volValue);
+            if (isNumber == true)
             {
-                _player.settings.volume = volume;
+                if (volValue >= 0 && volValue <= 100)
+                {
+                    _player.settings.volume = volValue;
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Volume has to be a value between 0 and 100.");
+                    Console.ResetColor();
+                    _frontEnd.ShowVolumeRange();
+                    Volume(_frontEnd.GetVolume());
+                }
             }
             else
             {  //ToDo: finish
-                Console.WriteLine("Volume has to be a value between 0 and 100.");
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Volume has to be a number.");
+                Console.ResetColor();
                 _frontEnd.ShowVolumeRange();
                 Volume(_frontEnd.GetVolume());
-                 //try
-                 //{
-                 //   _player.settings.volume = volume;
-                 //}
-                 // catch (FormatException)
-                 //{
-                 //Console.WriteLine($"The volume entered is not valid");
-                 //}
-                //catch ()
-                //{
-
-                //}
             }
         } 
 
@@ -91,15 +96,18 @@ namespace ConsoleMusicPlayer
             switch (control)
             {
                 case UserChoice.Exit:
+                    Console.WriteLine("Exiting Mediaplayer.");
                     Environment.Exit(0);
                     break;
 
                 case UserChoice.PausePlay:
                     songPlaying = PausePlay(songPlaying);
+                    Console.Clear();
                     break;
 
                 case UserChoice.StopPlaying:
                     songPlaying = StopPlaying();
+                    Console.Clear();
                     break;
 
                 case UserChoice.Volume:
@@ -110,27 +118,35 @@ namespace ConsoleMusicPlayer
 
                 case UserChoice.MuteUnmute:
                     MuteUnmute(songPlaying);
+                    Console.Clear();
                     break;
 
                 case UserChoice.NewSong:
                     _frontEnd.NewSongChoice();
                     string song = _frontEnd.GetUserChoice();
                     Initialize(song);
+                    Console.Clear();
                     break;
 
                 default:
                     Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Choose one of the available options.");
-                    _frontEnd.PrintMenu();
+                    Console.ResetColor();
                     break;
             }
             ExecutePlayer(songPlaying);
         }
-
+        public int CheckValidInput(string userInput)
+        {
+            int control;
+            int.TryParse(userInput, out control);
+            return control;
+        }
         public void ExecutePlayer(bool songPlaying)
         {
             _frontEnd.PrintMenu();
-            int control = _frontEnd.GetUserInput();
+            int control =_frontEnd.GetMenuInput();
             HandleUserInput((UserChoice)control, songPlaying);
         }
     }
