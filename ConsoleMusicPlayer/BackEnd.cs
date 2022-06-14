@@ -64,16 +64,20 @@ namespace ConsoleMusicPlayer
                 Console.WriteLine("Volume has to be a value between 0 and 100.");
                 _frontEnd.ShowVolumeRange();
                 Volume(_frontEnd.GetVolume());
-                // try
-                // {
-                // _player.settings.volume = volume
-                // }
-                //  catch (FormatException)
-                // {
-                // Console.WriteLine($"The volume entered is not valid");
-                // }
+                 //try
+                 //{
+                 //   _player.settings.volume = volume;
+                 //}
+                 // catch (FormatException)
+                 //{
+                 //Console.WriteLine($"The volume entered is not valid");
+                 //}
+                //catch ()
+                //{
+
+                //}
             }
-        } //ToDo: finish this
+        } 
 
         public bool StopPlaying()
         {
