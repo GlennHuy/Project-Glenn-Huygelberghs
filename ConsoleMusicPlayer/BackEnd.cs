@@ -74,7 +74,7 @@ namespace ConsoleMusicPlayer
                 }
             }
             else
-            {  //ToDo: finish
+            {
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Volume has to be a number.");
@@ -82,7 +82,7 @@ namespace ConsoleMusicPlayer
                 _frontEnd.ShowVolumeRange();
                 Volume(_frontEnd.GetVolume());
             }
-        } 
+        }
 
         public bool StopPlaying()
         {
@@ -135,18 +135,21 @@ namespace ConsoleMusicPlayer
                     Console.ResetColor();
                     break;
             }
+            _frontEnd.IsMuted(_player.settings.mute);
             ExecutePlayer(songPlaying);
         }
+
         public int CheckValidInput(string userInput)
         {
             int control;
             int.TryParse(userInput, out control);
             return control;
         }
+
         public void ExecutePlayer(bool songPlaying)
         {
             _frontEnd.PrintMenu();
-            int control =_frontEnd.GetMenuInput();
+            int control = _frontEnd.GetMenuInput();
             HandleUserInput((UserChoice)control, songPlaying);
         }
     }

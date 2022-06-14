@@ -2,7 +2,7 @@
 {
     public class FrontEnd
     {
-        public void PrintTitle() //ToDo: Make Fancy
+        public void PrintTitle()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine(@"
@@ -33,30 +33,30 @@ ___  ___ ___________ _____  ___  ______ _       _____   _____________
         public int GetMenuInput()
         {
             int control;
-            string input = Console.ReadLine();
-            if (!int.TryParse(input, out control))
+            string userInput = Console.ReadLine();
+            if (string.IsNullOrEmpty(userInput))
             {
-                Console.WriteLine("{0} is not an integer", input);
-                GetMenuInput(); 
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Choose one of the available options.");
+                Console.ResetColor();
+                return GetMenuInput();
             }
-            else if (int.TryParse(input, out control))
+            else if (!int.TryParse(userInput, out control))
             {
-                if (control < 0 && control >5)
-                {
-                    Console.WriteLine("Choose one of the available options.");
-                    GetMenuInput();
-                }
-                else if (control >= 0 && control <= 5)
-                {
-                    return control;
-                }
-            }return control;
-            
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Choose one of the available options designated by their numbers.");
+                Console.ResetColor();
+                return GetMenuInput();
+            }
+            else
+            {
+                control = Convert.ToInt32(userInput);
+                return control;
+            }
         }
 
         public string GetUserChoice()
         {
-            
             string input = TrimInput(Console.ReadLine());
             return input;
         }
@@ -74,16 +74,16 @@ ___  ___ ___________ _____  ___  ______ _       _____   _____________
 
         public string GetVolume()
         {
-            string volume =Console.ReadLine();
+            string volume = Console.ReadLine();
             return volume;
         }
+
         public void IsMuted(bool muteStatus)
         {
             if (muteStatus == true)
             {
                 Console.WriteLine("Song is currently muted.");
             }
-
         }
 
         public void NewSongChoice()
