@@ -27,12 +27,12 @@ namespace ConsoleMusicPlayer
             switch (songPlaying)
             {
                 case true:
-                    songPlaying = true;
+                    songPlaying = false;
                     _player.controls.pause();
                     return songPlaying;
 
                 case false:
-                    songPlaying = false;
+                    songPlaying = true;
                     _player.controls.play();
                     return songPlaying;
 
@@ -129,13 +129,13 @@ namespace ConsoleMusicPlayer
                     _frontEnd.ErrorDefault();
                     break;
             }
-            _frontEnd.IsMuted(_player.settings.mute);
             ExecutePlayer(songPlaying);
         }
 
         public void ExecutePlayer(bool songPlaying)
         {
             _frontEnd.PrintMenu();
+            _frontEnd.IsMuted(_player.settings.mute);
             int control = CheckMenuInput(_frontEnd.GetMenuInput());
             HandleUserInput((UserChoice)control, songPlaying);
         }

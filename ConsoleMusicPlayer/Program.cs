@@ -9,8 +9,8 @@ BackEnd backEnd = new BackEnd(player, frontEnd);
 frontEnd.PrintTitle();
 
 string song = frontEnd.GetSongChoice();
-bool songPlaying = true;
 
 backEnd.Initialize(song);
+bool songPlaying = true;
 
 backEnd.ExecutePlayer(songPlaying);

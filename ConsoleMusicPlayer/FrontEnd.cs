@@ -21,15 +21,14 @@ ___  ___ ___________ _____  ___  ______ _       _____   _____________
         public void PrintMenu()
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("|1 : Pause/Play\t|");
-            Console.WriteLine("|2 : Stop\t|");
-            Console.WriteLine("|3 : Volume\t|");
-            Console.WriteLine("|4 : Mute/Unmute|");
-            Console.WriteLine("|5 : New Song\t|");
-            Console.WriteLine("|0 : Quit\t|");
+            Console.WriteLine(@"
+╔═══════════════╦═══════════════╦═══════════════╦═══════════════╦═══════════════╦═══════════════╗
+║        1      ║       2       ║        3      ║       4       ║       5       ║       0       ║
+╟───────────────╫───────────────╫───────────────╫───────────────╫───────────────╫───────────────╢
+║   Pause/Play  ║     Stop      ║ Change Volume ║  Toggle Mute  ║   New Song    ║     Quit      ║
+╚═══════════════╩═══════════════╩═══════════════╩═══════════════╩═══════════════╩═══════════════╝");
             Console.ResetColor();
         }
-
         public string GetMenuInput()
         {
             string userInput = Console.ReadLine();
@@ -63,7 +62,9 @@ ___  ___ ___________ _____  ___  ______ _       _____   _____________
         {
             if (muteStatus == true)
             {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine("Song is currently muted.");
+                Console.ResetColor();
             }
         }
 
