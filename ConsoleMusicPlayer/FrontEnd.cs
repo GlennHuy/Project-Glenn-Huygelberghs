@@ -29,6 +29,7 @@ ___  ___ ___________ _____  ___  ______ _       _____   _____________
 ╚═══════════════╩═══════════════╩═══════════════╩═══════════════╩═══════════════╩═══════════════╝");
             Console.ResetColor();
         }
+
         public string GetMenuInput()
         {
             string userInput = Console.ReadLine();
@@ -66,30 +67,35 @@ ___  ___ ___________ _____  ___  ______ _       _____   _____________
                 Console.WriteLine("Song is currently muted.");
                 Console.ResetColor();
             }
+            else if (muteStatus != true) { }
         }
 
         public void NewSongChoice()
         {
             Console.WriteLine("Enter the path of the new song you want to play.");
         }
+
         public void ErrorMenuType()
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Error: Program only responds to the numbers displayed.");
             Console.ResetColor();
         }
+
         public void ErrorVolumeNumber()
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Error: Volume has to be a number.");
             Console.ResetColor();
         }
+
         public void ErrorVolumeRange()
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Error :Volume has to be a value between 0 and 100.");
             Console.ResetColor();
         }
+
         public void ErrorDefault()
         {
             Console.ForegroundColor = ConsoleColor.Red;
